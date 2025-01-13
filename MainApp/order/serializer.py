@@ -34,7 +34,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['order_date', 'customer_id', 'status', 'total_amount', 'details']
+        fields = ['id','order_date', 'customer_id', 'status', 'total_amount', 'details']
 
     def create(self, validated_data):
         with transaction.atomic():
@@ -53,11 +53,15 @@ class OrderSerializer(serializers.ModelSerializer):
 
                 order_detail = OrderDetail.objects.create(order=order, **detail_data)
                 total_amount += order_detail.sub_total
-                if status != 'pending' and status != 'cancel':
+                if status == 'completed':
                     inventory_detail.quantity_in_stock -= order_detail.quantity
                     inventory_detail.save()
-
-
+                elif status == 'cancel':
+                    raise serializers.ValidationError("Only completed or pending statuses are allowed for create.")
+                elif status == 'pending':
+                    pass
+                else:
+                    raise serializers.ValidationError("Invalid status provided.")
             order.total_amount = total_amount
             order.save()
         return order
@@ -76,9 +80,11 @@ class OrderSerializer(serializers.ModelSerializer):
                     inventory_detail = InventoryDetail.objects.get(product=detail.product)
                     inventory_detail.quantity_in_stock += detail.quantity
                     inventory_detail.save()
-
             elif new_status == 'completed':
-                pass
+                for detail in instance.details.all():
+                    inventory_detail = InventoryDetail.objects.get(product=detail.product)
+                    inventory_detail.quantity_in_stock -= detail.quantity
+                    inventory_detail.save()
             else:
                 raise serializers.ValidationError("Only completed or canceled statuses are allowed for updates.")
             instance.status = new_status
