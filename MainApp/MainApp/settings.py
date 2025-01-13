@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'product',
     'inventoryDetails',
     'order',
-    # 'orderdetail',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+SENDGRID_API_KEY = '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'
+DEFAULT_FROM_EMAIL = 'akibather56@gmail.com'
+ADMIN_EMAIL = 'akibather56@gmail.com'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
