@@ -8,9 +8,7 @@ from inventoryDetails.models import InventoryDetail
 
 @receiver(post_save,sender=InventoryDetail)
 def check_stock_and_notify(sender,instance,**kwargs):
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa out side if condition")
     if instance.quantity_in_stock <= instance.minimum_stock_level:
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa in side if condition")
         send_low_stock_email(instance)
 
 def send_low_stock_email(inventory_detail):
