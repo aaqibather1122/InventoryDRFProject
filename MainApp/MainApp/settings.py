@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,9 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-SENDGRID_API_KEY = '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'
-DEFAULT_FROM_EMAIL = 'akibather56@gmail.com'
-ADMIN_EMAIL = 'akibather56@gmail.com'
+load_dotenv()
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
