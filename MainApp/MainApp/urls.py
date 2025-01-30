@@ -11,5 +11,5 @@ urlpatterns = [
     path('',include('product.urls')),
     path('',include('inventoryDetails.urls')),
     path('',include('order.urls')),
-    # path('',include('orderdetail.urls')),
+    path('',include('payment.urls')),
 ]
