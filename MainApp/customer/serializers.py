@@ -8,7 +8,7 @@ class CustomerSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'email', 'phone_number', 'address', 'created_at', 'updated_at']
 
 
-    def validate_phone_number(self,value):
-        if len(str(value)) != 11:
-            raise serializers.ValidationError("Phone number must be 11 digits.")
-        return value
+    # def validate_phone_number(self,value):
+    #     if len(str(value)) != 11:
+    #         raise serializers.ValidationError("Phone number must be 11 digits.")
+    #     return value
