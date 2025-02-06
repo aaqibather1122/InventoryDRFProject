@@ -4,7 +4,7 @@ from customer.models import Customer
 
 
 class Order(models.Model):
-    order_date = models.DateTimeField()
+    order_date = models.DateTimeField(auto_now_add=True)
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     status = models.CharField(choices=[('pending', 'Pending'), ('cancel', 'Cancel'), ('completed', 'Completed')], max_length=10)
