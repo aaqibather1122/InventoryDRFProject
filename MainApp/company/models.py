@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class Company(models.Model):
@@ -8,6 +9,7 @@ class Company(models.Model):
     supplier = models.ForeignKey('supplier.Supplier', on_delete=models.SET_NULL, null=True, related_name='supplier')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='companies')
 
     def __str__(self):
         return self.name
